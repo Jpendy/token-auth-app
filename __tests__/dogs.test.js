@@ -40,7 +40,7 @@ describe('token-auth-app routes', () => {
     });
   });
 
-  it('it creates a new dog but only if user is signed in and verified', () => {
+  it('it creates a new dog but only if user is signed in and logged in', () => {
     
     const agent = request.agent(app);
 
@@ -69,6 +69,34 @@ describe('token-auth-app routes', () => {
           });
       });
   });
+
+  it('it gets a list of all dogs if user is logged in', () => {
+    const agent = request.agent(app);
+
+    return agent
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'jake@jake.com',
+        password: 'jakePassword',
+      })
+      .then(() => {
+        return agent
+          .get('/api/v1/dogs')
+          .then(res => {
+            expect(res.body).toEqual(
+              [{
+                __v: 0,
+                _id: dog.id,
+                breedName: 'Black Lab',
+                name: 'Leo',
+                user: user.id 
+              }]
+            );
+          });
+      });
+  });
+
+
 
   it('it gets a dog by id with GET', () => {
     const agent = request.agent(app);
