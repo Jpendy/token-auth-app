@@ -40,8 +40,7 @@ describe('token-auth-app routes', () => {
     });
   });
 
-  it('it creates a new dog but only if user is signed in and logged in', () => {
-    
+  it('it creates a new dog but only if user is signed in and logged in', () => {  
     const agent = request.agent(app);
 
     return agent
@@ -95,8 +94,6 @@ describe('token-auth-app routes', () => {
           });
       });
   });
-
-
 
   it('it gets a dog by id with GET', () => {
     const agent = request.agent(app);
